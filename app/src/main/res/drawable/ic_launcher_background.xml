@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:pathData="M0,0h108v108h-108z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="54" android:startY="0" android:endX="54" android:endY="108"
+                android:startColor="#FF3FC7E8" android:endColor="#FF1B6FA8" />
+        </aapt:attr>
+    </path>
+    <!-- pond ripples -->
+    <path android:fillColor="#00000000" android:strokeColor="#33FFFFFF" android:strokeWidth="2"
+        android:pathData="M14,86 a40,10 0 1,0 80,0 a40,10 0 1,0 -80,0" />
+    <path android:fillColor="#00000000" android:strokeColor="#22FFFFFF" android:strokeWidth="2"
+        android:pathData="M2,92 a52,14 0 1,0 104,0 a52,14 0 1,0 -104,0" />
+    <!-- lily pad -->
+    <path android:fillColor="#FF2E9E5B"
+        android:pathData="M24,84 a30,9 0 1,0 60,0 a30,9 0 1,0 -60,0z" />
+    <path android:fillColor="#FF1F7A45" android:pathData="M54,84 L78,80 L80,84z" />
+</vector>

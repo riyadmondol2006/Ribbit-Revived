@@ -1,0 +1,94 @@
+//! Minimal OpenGL ES 3.0 bindings (only the entry points the renderer uses).
+#![allow(non_camel_case_types, non_snake_case, dead_code, clippy::missing_safety_doc)]
+
+pub type GLenum = u32;
+pub type GLuint = u32;
+pub type GLint = i32;
+pub type GLsizei = i32;
+pub type GLfloat = f32;
+pub type GLboolean = u8;
+pub type GLbitfield = u32;
+pub type GLchar = std::os::raw::c_char;
+pub type GLsizeiptr = isize;
+pub type GLintptr = isize;
+
+pub const FALSE: GLboolean = 0;
+pub const TRUE: GLboolean = 1;
+pub const TRIANGLES: GLenum = 0x0004;
+pub const UNSIGNED_BYTE: GLenum = 0x1401;
+pub const UNSIGNED_SHORT: GLenum = 0x1403;
+pub const FLOAT: GLenum = 0x1406;
+pub const COLOR_BUFFER_BIT: GLbitfield = 0x4000;
+pub const BLEND: GLenum = 0x0BE2;
+pub const DEPTH_TEST: GLenum = 0x0B71;
+pub const CULL_FACE: GLenum = 0x0B44;
+pub const SCISSOR_TEST: GLenum = 0x0C11;
+pub const ONE: GLenum = 1;
+pub const SRC_ALPHA: GLenum = 0x0302;
+pub const ONE_MINUS_SRC_ALPHA: GLenum = 0x0303;
+pub const ARRAY_BUFFER: GLenum = 0x8892;
+pub const ELEMENT_ARRAY_BUFFER: GLenum = 0x8893;
+pub const STATIC_DRAW: GLenum = 0x88E4;
+pub const DYNAMIC_DRAW: GLenum = 0x88E8;
+pub const STREAM_DRAW: GLenum = 0x88E0;
+pub const FRAGMENT_SHADER: GLenum = 0x8B30;
+pub const VERTEX_SHADER: GLenum = 0x8B31;
+pub const COMPILE_STATUS: GLenum = 0x8B81;
+pub const LINK_STATUS: GLenum = 0x8B82;
+pub const INFO_LOG_LENGTH: GLenum = 0x8B84;
+pub const TEXTURE_2D: GLenum = 0x0DE1;
+pub const TEXTURE0: GLenum = 0x84C0;
+pub const TEXTURE_MAG_FILTER: GLenum = 0x2800;
+pub const TEXTURE_MIN_FILTER: GLenum = 0x2801;
+pub const TEXTURE_WRAP_S: GLenum = 0x2802;
+pub const TEXTURE_WRAP_T: GLenum = 0x2803;
+pub const LINEAR: GLint = 0x2601;
+pub const CLAMP_TO_EDGE: GLint = 0x812F;
+pub const R8: GLint = 0x8229;
+pub const RED: GLenum = 0x1903;
+pub const UNPACK_ALIGNMENT: GLenum = 0x0CF5;
+pub const MULTISAMPLE_EXT: GLenum = 0x809D;
+
+#[cfg_attr(target_os = "android", link(name = "GLESv3"))]
+extern "C" {
+    pub fn glViewport(x: GLint, y: GLint, w: GLsizei, h: GLsizei);
+    pub fn glScissor(x: GLint, y: GLint, w: GLsizei, h: GLsizei);
+    pub fn glClearColor(r: GLfloat, g: GLfloat, b: GLfloat, a: GLfloat);
+    pub fn glClear(mask: GLbitfield);
+    pub fn glEnable(cap: GLenum);
+    pub fn glDisable(cap: GLenum);
+    pub fn glBlendFunc(s: GLenum, d: GLenum);
+    pub fn glBlendFuncSeparate(sr: GLenum, dr: GLenum, sa: GLenum, da: GLenum);
+    pub fn glCreateShader(t: GLenum) -> GLuint;
+    pub fn glShaderSource(s: GLuint, count: GLsizei, src: *const *const GLchar, len: *const GLint);
+    pub fn glCompileShader(s: GLuint);
+    pub fn glGetShaderiv(s: GLuint, p: GLenum, out: *mut GLint);
+    pub fn glGetShaderInfoLog(s: GLuint, max: GLsizei, len: *mut GLsizei, log: *mut GLchar);
+    pub fn glDeleteShader(s: GLuint);
+    pub fn glCreateProgram() -> GLuint;
+    pub fn glAttachShader(p: GLuint, s: GLuint);
+    pub fn glLinkProgram(p: GLuint);
+    pub fn glGetProgramiv(p: GLuint, n: GLenum, out: *mut GLint);
+    pub fn glGetProgramInfoLog(p: GLuint, max: GLsizei, len: *mut GLsizei, log: *mut GLchar);
+    pub fn glUseProgram(p: GLuint);
+    pub fn glGetUniformLocation(p: GLuint, name: *const GLchar) -> GLint;
+    pub fn glUniform1i(l: GLint, v: GLint);
+    pub fn glUniform1f(l: GLint, v: GLfloat);
+    pub fn glUniform2f(l: GLint, a: GLfloat, b: GLfloat);
+    pub fn glGenBuffers(n: GLsizei, out: *mut GLuint);
+    pub fn glBindBuffer(t: GLenum, b: GLuint);
+    pub fn glBufferData(t: GLenum, size: GLsizeiptr, data: *const std::ffi::c_void, usage: GLenum);
+    pub fn glBufferSubData(t: GLenum, off: GLintptr, size: GLsizeiptr, data: *const std::ffi::c_void);
+    pub fn glGenVertexArrays(n: GLsizei, out: *mut GLuint);
+    pub fn glBindVertexArray(v: GLuint);
+    pub fn glEnableVertexAttribArray(i: GLuint);
+    pub fn glVertexAttribPointer(i: GLuint, size: GLint, t: GLenum, norm: GLboolean, stride: GLsizei, ptr: *const std::ffi::c_void);
+    pub fn glDrawElements(mode: GLenum, count: GLsizei, t: GLenum, idx: *const std::ffi::c_void);
+    pub fn glGenTextures(n: GLsizei, out: *mut GLuint);
+    pub fn glBindTexture(t: GLenum, tex: GLuint);
+    pub fn glActiveTexture(t: GLenum);
+    pub fn glTexParameteri(t: GLenum, p: GLenum, v: GLint);
+    pub fn glPixelStorei(p: GLenum, v: GLint);
+    pub fn glTexImage2D(t: GLenum, level: GLint, ifmt: GLint, w: GLsizei, h: GLsizei, border: GLint, fmt: GLenum, ty: GLenum, data: *const std::ffi::c_void);
+    pub fn glGetError() -> GLenum;
+}
