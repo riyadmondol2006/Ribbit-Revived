@@ -63,6 +63,15 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6
 
+      - name: Download Gradle (retries when the download server hiccups)
+        run: |
+          for i in 1 2 3 4 5; do
+            ./gradlew --version > /dev/null && exit 0
+            echo "Gradle download failed (attempt $i), retrying in $((i * 30)) s"
+            sleep $((i * 30))
+          done
+          exit 1
+
       - name: Restore the signing keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
